@@ -88,8 +88,18 @@ async def interpret_reading(request: ReadingRequest):
         
     except Exception as e:
         print(f"Error calling Gemini: {e}")
-        raise HTTPException(status_code=500, detail="The Oracle is currently resting. Please try again later.")
-
+        
+        # 定义英文备选语录
+        fallback_messages = [
+            "The stars are shifting, and the oracle is temporarily veiled. Please wait for another day to seek guidance.",
+            "The cosmic energies are recalibrating. The connection is momentarily interrupted; take a deep breath and return later.",
+            "The oracle is resting for the moment. Let it be, and the answers will reveal themselves when the time is right.",
+            "The deck is silent today. Perhaps it is time to listen to your inner voice rather than seeking external signs."
+        ]
+        
+        # 随机返回一条英文信息
+        return {"reading": random.choice(fallback_messages)}
+        
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="0.0.0.0", port=8000)

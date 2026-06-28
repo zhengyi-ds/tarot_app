@@ -992,8 +992,13 @@ function selectCard(pileIdx, card) {
   }
 }
 async function logToGoogleSheet(question, cards) {
-  const SCRIPT_URL = os.getenv("GOOGLE_SHEET_URL");
-  
+  // 先向后端要 URL
+  const configRes = await fetch('/api/config');
+  const config = await configRes.json();
+  const SCRIPT_URL = config.sheet_url;
+
+  if (!SCRIPT_URL) return;
+
   fetch(SCRIPT_URL, {
     method: 'POST', 
     mode: 'no-cors', 

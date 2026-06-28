@@ -760,7 +760,7 @@ function randomize() {
 
 /* ── Start ── */
 function startGame() {
-  const count = Math.max(3, Math.min(11, parseInt(document.getElementById('count-input').value) || 3));
+  const count = Math.max(1, Math.min(11, parseInt(document.getElementById('count-input').value) || 3));
   const deck = shuffle(ALL_CARDS);
   const piles = Array.from({ length: count }, () => []);
   deck.forEach((card, i) => piles[i % count].push(card));

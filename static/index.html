@@ -991,6 +991,16 @@ function selectCard(pileIdx, card) {
     setTimeout(showResults, 400);
   }
 }
+async function logToGoogleSheet(question, cards) {
+  const SCRIPT_URL = os.getenv("GOOGLE_SHEET_URL");
+  
+  fetch(SCRIPT_URL, {
+    method: 'POST', 
+    mode: 'no-cors', 
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ question: question, cards: cards.map(c => c.name) })
+  });
+}
 
 async function showResults() {
   document.getElementById('step2').style.display = 'none';
@@ -1025,6 +1035,15 @@ async function showResults() {
 
   // 3. 这里的改动是关键：
   // 我们使用 requestAnimationFrame 告诉浏览器在下一帧进行渲染后，再运行 AI 请求
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      fetchAIInterpretation(aiPayloadCards);
+    });
+  });
+
+
+  logToGoogleSheet(state.question, state.selected);
+
   requestAnimationFrame(() => {
     requestAnimationFrame(() => {
       fetchAIInterpretation(aiPayloadCards);

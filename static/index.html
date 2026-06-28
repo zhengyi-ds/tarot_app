@@ -551,18 +551,30 @@ h1 {
     const audio = document.getElementById('bgm');
     const btn = document.getElementById('toggle-music');
 
-    // 交互触发自动播放（浏览器强制要求）
-    document.body.addEventListener('click', function playAudio() {
+    // 统一处理用户的第一次交互（点击或手机端触摸）
+    function handleFirstInteraction() {
         if (audio.paused) {
-            audio.play().catch(e => console.log("播放失败，需用户交互"));
+            audio.play().then(() => {
+                btn.textContent = "🎵";
+            }).catch(e => console.log("播放被浏览器拦截:", e));
         }
-        // 播放后移除监听，避免多次触发
-        document.body.removeEventListener('click', playAudio);
-    }, { once: true });
+        // 触发一次后，彻底移除这些全局事件监听
+        window.removeEventListener('click', handleFirstInteraction);
+        window.removeEventListener('touchstart', handleFirstInteraction);
+    }
 
-    // 播放/暂停切换按钮
+    // 监听全局交互
+    window.addEventListener('click', handleFirstInteraction, { once: true });
+    window.addEventListener('touchstart', handleFirstInteraction, { once: true });
+
+    // 🎵 按钮的专属开关
     btn.addEventListener('click', (e) => {
-        e.stopPropagation(); // 防止点击按钮时触发 body 的播放逻辑
+        e.stopPropagation(); // 阻止冒泡，避免触发全局的 handleFirstInteraction
+        
+        // 如果用户第一次互动就是点按钮，手动移除全局监听
+        window.removeEventListener('click', handleFirstInteraction);
+        window.removeEventListener('touchstart', handleFirstInteraction);
+
         if (audio.paused) {
             audio.play();
             btn.textContent = "🎵";

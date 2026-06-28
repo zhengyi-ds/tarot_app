@@ -76,7 +76,7 @@ async def interpret_reading(request: ReadingRequest):
         # 调用 Gemini (使用新版 SDK)
         # system_instruction 用于设置模型的人格和语言规则
         response = client.models.generate_content(
-            model="models/gemini-2.5-flash",
+            model="models/gemini-3.1-flash-lite",
             contents=prompt,
             config={
                 "system_instruction": "You are a mystical, wise, and empathetic Tarot reader. "

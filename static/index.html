@@ -607,6 +607,7 @@ h1 {
   color: var(--rose-dark);
   animation: pulse 1.5s infinite;
   margin: 40px 0;
+  
 }
 
 @keyframes pulse {
@@ -991,38 +992,29 @@ function selectCard(pileIdx, card) {
   }
 }
 
-/* ── Show results & Fetch AI Reading ── */
 async function showResults() {
   document.getElementById('step2').style.display = 'none';
   document.getElementById('step3').style.display = 'flex';
 
-  // Show question above cards
+  // 1. 渲染问题
   document.getElementById('display-question').textContent = `"${state.question}"`;
 
+  // 2. 渲染图片
   const container = document.getElementById('results');
   container.innerHTML = '';
-
-  // Prepare payload for AI
   const aiPayloadCards = [];
 
   state.selected.forEach((card, i) => {
     const meaning = card.isReversed ? card.rev : card.up;
-    
-    // Add to payload
-    aiPayloadCards.push({
-        name: card.name,
-        isReversed: card.isReversed,
-        meaning: meaning
-    });
+    aiPayloadCards.push({ name: card.name, isReversed: card.isReversed, meaning: meaning });
 
     const el = document.createElement('div');
     el.className = 'result-card';
-    el.style.animationDelay = (i * 0.1) + 's';
+    el.style.animationDelay = (i * 0.15) + 's';
     el.innerHTML = `
       <div class="result-element">${card.element}</div>
       <div class="result-img-wrap ${card.isReversed ? 'reversed' : ''}">
-        <img src="${card.img}" alt="${card.name}"
-             onerror="this.parentElement.style.background='var(--bg2)'">
+        <img src="${card.img}" alt="${card.name}" onerror="this.parentElement.style.background='var(--bg2)'">
         ${card.isReversed ? '<div class="rev-tag">Reversed</div>' : ''}
       </div>
       <div class="result-name">${card.name}</div>
@@ -1031,30 +1023,34 @@ async function showResults() {
     container.appendChild(el);
   });
 
-  // Reset AI content to loading state
+  // 3. 这里的改动是关键：
+  // 我们使用 requestAnimationFrame 告诉浏览器在下一帧进行渲染后，再运行 AI 请求
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      fetchAIInterpretation(aiPayloadCards);
+    });
+  });
+}
+
+// 4. 把 AI 请求拆离出来作为一个独立的异步函数
+async function fetchAIInterpretation(cardsData) {
   const aiContent = document.getElementById('ai-reading-content');
   aiContent.innerHTML = `<div class="loading-oracle">Consulting the ether...</div>`;
 
-  // Fetch AI Interpretation
   try {
       const response = await fetch('/api/interpret', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
               question: state.question,
-              cards: aiPayloadCards
+              cards: cardsData
           })
       });
       
-      if (!response.ok) throw new Error("Network response was not ok");
-      
       const data = await response.json();
-      // Inject AI response
       aiContent.innerHTML = `<div class="ai-reading-text">${data.reading}</div>`;
-      
   } catch (error) {
-      console.error("Failed to fetch reading:", error);
-      aiContent.innerHTML = `<div class="ai-reading-text" style="color: var(--text-dim); font-style: italic;">The veil is thick today; the oracle could not synthesize an answer. Rely on your own intuition for these cards.</div>`;
+      aiContent.innerHTML = `<div class="ai-reading-text">The connection to the ether is interrupted.</div>`;
   }
 }
 

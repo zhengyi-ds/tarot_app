@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tarot · Daily Reading</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Jost:wght@300;400&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --bg:        #F2EDEA;       /* warm off-white */
+  --bg2:       #EAE4E0;       /* slightly deeper */
+  --rose:      #C4A5A0;       /* dusty rose */
+  --rose-dark: #A8857F;       /* deeper rose */
+  --lotus:     #B8A9B4;       /* muted lotus/mauve */
+  --lotus-dim: #D2C8CF;       /* lighter lotus */
+  --text:      #5C5059;       /* warm dark plum-grey */
+  --text-dim:  #9B8E92;       /* muted mid */
+  --line:      #D8CFC9;       /* divider */
+  --card-bg:   #EDE6E1;       /* card surface */
+  --white:     #FAF7F5;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  min-height: 100vh;
+}
+
+/* ── STEP 1 ── */
+#step1 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 48px 24px;
+  text-align: center;
+}
+
+.logo-line {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 40px;
+}
+
+.logo-rule {
+  width: 60px;
+  height: 1px;
+  background: var(--rose);
+  opacity: 0.6;
+}
+
+.logo-mark {
+  font-family: 'Jost', sans-serif;
+  font-weight: 300;
+  font-size: 0.7rem;
+  letter-spacing: 0.35em;
+  color: var(--text-dim);
+  text-transform: uppercase;
+}
+
+h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-weight: 300;
+  font-size: clamp(2rem, 6vw, 3.4rem);
+  color: var(--text);
+  letter-spacing: 0.04em;
+  line-height: 1.15;
+  margin-bottom: 10px;
+}
+
+.subtitle {
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--text-dim);
+  letter-spacing: 0.08em;
+  margin-bottom: 52px;
+}
+
+.divider {
+  width: 1px;
+  height: 48px;
+  background: linear-gradient(to bottom, transparent, var(--rose), transparent);
+  margin: 0 auto 52px;
+}
+
+.prompt-text {
+  font-size: 0.8rem;
+  font-family: 'Jost', sans-serif;
+  font-weight: 300;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 28px;
+}
+
+.count-area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+}
+
+.count-big {
+  font-size: 5rem;
+  font-weight: 300;
+  color: var(--rose-dark);
+  line-height: 1;
+  letter-spacing: -0.02em;
+  min-width: 80px;
+}
+
+.stepper-row {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  border: 1px solid var(--line);
+  background: var(--white);
+}
+
+.stepper-btn {
+  width: 44px; height: 44px;
+  background: none;
+  border: none;
+  color: var(--rose-dark);
+  font-size: 1.3rem;
+  cursor: pointer;
+  transition: background 0.15s;
+  font-family: 'Cormorant Garamond', serif;
+}
+.stepper-btn:hover { background: var(--bg2); }
+
+.stepper-input {
+  width: 56px;
+  border: none;
+  border-left: 1px solid var(--line);
+  border-right: 1px solid var(--line);
+  background: transparent;
+  text-align: center;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.2rem;
+  color: var(--text);
+  outline: none;
+  -moz-appearance: textfield;
+  padding: 0;
+  height: 44px;
+}
+.stepper-input::-webkit-outer-spin-button,
+.stepper-input::-webkit-inner-spin-button { -webkit-appearance: none; }
+
+.btn-row {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 8px;
+}
+
+.btn {
+  padding: 12px 32px;
+  font-family: 'Jost', sans-serif;
+  font-weight: 300;
+  font-size: 0.72rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: 1px solid;
+}
+
+.btn-main {
+  background: var(--rose-dark);
+  border-color: var(--rose-dark);
+  color: var(--white);
+}
+.btn-main:hover { background: var(--rose); border-color: var(--rose); }
+
+.btn-ghost {
+  background: transparent;
+  border-color: var(--line);
+  color: var(--text-dim);
+}
+.btn-ghost:hover { border-color: var(--lotus); color: var(--text); }
+
+/* ── STEP 2 ── */
+#step2 {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  padding: 56px 24px 80px;
+  min-height: 100vh;
+}
+
+.step-header {
+  text-align: center;
+  margin-bottom: 48px;
+}
+
+.step-eyebrow {
+  font-family: 'Jost', sans-serif;
+  font-weight: 300;
+  font-size: 0.68rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  margin-bottom: 10px;
+}
+
+.step-title {
+  font-weight: 300;
+  font-size: clamp(1.4rem, 3.5vw, 2rem);
+  color: var(--text);
+  letter-spacing: 0.04em;
+  margin-bottom: 8px;
+}
+
+.step-note {
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--text-dim);
+}
+
+/* progress dots */
+.progress-dots {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.pdot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--line);
+  transition: background 0.3s;
+}
+.pdot.done { background: var(--rose-dark); }
+.pdot.active { background: var(--lotus); }
+
+/* piles grid */
+#piles-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  justify-content: center;
+  max-width: 860px;
+}
+
+.pile-col {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+/* The pile itself: fanned stack */
+.pile-fan {
+  position: relative;
+  width: 96px;
+  height: 158px;
+  cursor: pointer;
+  transition: transform 0.25s;
+}
+
+.pile-col:not(.used):hover .pile-fan { transform: translateY(-6px); }
+.pile-col.used { opacity: 0.45; pointer-events: none; }
+
+/* card back layers */
+.cback {
+  position: absolute;
+  width: 88px;
+  height: 148px;
+  border-radius: 4px;
+  background: var(--card-bg);
+  border: 1px solid var(--line);
+  overflow: hidden;
+}
+
+.cback:nth-child(1) { top: 8px; left: 4px; transform: rotate(-4deg); box-shadow: 0 2px 8px rgba(92,80,89,0.1); }
+.cback:nth-child(2) { top: 4px; left: 2px; transform: rotate(-2deg); box-shadow: 0 2px 6px rgba(92,80,89,0.08); }
+.cback:nth-child(3) { top: 0;   left: 0;   transform: rotate(0deg);  box-shadow: 0 3px 10px rgba(92,80,89,0.12); }
+
+.pile-col:not(.used):hover .cback:nth-child(3) {
+  border-color: var(--rose);
+  box-shadow: 0 6px 18px rgba(196,165,160,0.3);
+}
+
+/* pile count badge */
+.pile-count-badge {
+  position: absolute;
+  top: -8px; right: -8px;
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  background: var(--lotus);
+  color: var(--white);
+  font-family: 'Jost', sans-serif;
+  font-size: 0.7rem;
+  font-weight: 400;
+  display: flex; align-items: center; justify-content: center;
+  z-index: 10;
+  box-shadow: 0 1px 4px rgba(92,80,89,0.15);
+}
+
+.pile-label {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.68rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+}
+.pile-col:not(.used):hover .pile-label { color: var(--rose-dark); }
+
+/* ─── PILE CARD LIST (expanded) ─── */
+.pile-list-panel {
+  position: fixed;
+  inset: 0;
+  background: rgba(242,237,234,0.92);
+  backdrop-filter: blur(6px);
+  z-index: 200;
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 48px 20px 60px;
+  overflow-y: auto;
+}
+
+.pile-list-panel.open { display: flex; }
+
+.panel-header {
+  text-align: center;
+  margin-bottom: 32px;
+  width: 100%;
+  position: relative;
+}
+
+.panel-close {
+  position: absolute;
+  top: 0; right: 0;
+  background: none;
+  border: none;
+  font-size: 1.4rem;
+  color: var(--text-dim);
+  cursor: pointer;
+  line-height: 1;
+  padding: 4px 8px;
+}
+.panel-close:hover { color: var(--text); }
+
+.panel-title {
+  font-weight: 300;
+  font-size: 1.5rem;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+.panel-sub {
+  font-style: italic;
+  font-size: 0.9rem;
+  color: var(--text-dim);
+}
+
+.panel-cards-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  justify-content: center;
+  max-width: 720px;
+}
+
+/* individual selectable card in panel */
+.panel-card {
+  width: 88px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.panel-card:hover { transform: translateY(-4px); }
+
+.panel-card-img {
+  width: 88px;
+  height: 148px;
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: var(--card-bg);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.panel-card:hover .panel-card-img {
+  border-color: var(--rose);
+  box-shadow: 0 4px 14px rgba(196,165,160,0.35);
+}
+
+.panel-card-img img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.panel-card-img .cback-inner {
+  width: 100%; height: 100%;
+}
+
+.panel-card-name {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-dim);
+  text-align: center;
+  line-height: 1.3;
+}
+
+/* ── STEP 3 ── */
+#step3 {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  padding: 56px 24px 100px;
+  min-height: 100vh;
+}
+
+#results {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 28px;
+  justify-content: center;
+  max-width: 1000px;
+  margin-top: 48px;
+}
+
+.result-card {
+  width: 180px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: fadeUp 0.5s ease both;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.result-img-wrap {
+  width: 140px;
+  height: 234px;
+  border-radius: 4px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+  background: var(--card-bg);
+  margin-bottom: 14px;
+  position: relative;
+  box-shadow: 0 4px 16px rgba(92,80,89,0.1);
+}
+
+.result-img-wrap img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.result-img-wrap.reversed img { transform: rotate(180deg); }
+
+.rev-tag {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  background: rgba(184,169,180,0.85);
+  text-align: center;
+  font-family: 'Jost', sans-serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--white);
+  padding: 4px 0;
+}
+
+.result-element {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.6rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--lotus);
+  margin-bottom: 5px;
+}
+
+.result-name {
+  font-size: 1rem;
+  font-weight: 400;
+  color: var(--text);
+  text-align: center;
+  margin-bottom: 8px;
+  line-height: 1.3;
+}
+
+.result-meaning {
+  font-style: italic;
+  font-size: 0.85rem;
+  color: var(--text-dim);
+  text-align: center;
+  line-height: 1.6;
+}
+
+.btn-restart {
+  margin-top: 60px;
+  padding: 13px 40px;
+  background: transparent;
+  border: 1px solid var(--line);
+  color: var(--text-dim);
+  font-family: 'Jost', sans-serif;
+  font-weight: 300;
+  font-size: 0.72rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-restart:hover { border-color: var(--rose); color: var(--text); }
+
+/* card back pattern */
+.cback-inner {
+  width: 100%; height: 100%;
+  background:
+    repeating-linear-gradient(
+      45deg,
+      transparent,
+      transparent 6px,
+      rgba(196,165,160,0.08) 6px,
+      rgba(196,165,160,0.08) 7px
+    ),
+    var(--card-bg);
+  display: flex; align-items: center; justify-content: center;
+}
+
+.cback-inner svg { width: 44px; height: 44px; opacity: 0.3; }
+</style>
+</head>
+<body>
+
+<!-- ══ STEP 1 ══ -->
+<div id="step1">
+  <div class="logo-line">
+    <div class="logo-rule"></div>
+    <div class="logo-mark">Tarot Oracle</div>
+    <div class="logo-rule"></div>
+  </div>
+
+  <h1>Daily Reading</h1>
+  <p class="subtitle">shuffle the deck, draw your cards</p>
+
+  <div class="divider"></div>
+
+  <p class="prompt-text">How many cards today?</p>
+
+  <div class="count-area">
+    <div class="count-big" id="count-display">3</div>
+
+    <div class="stepper-row">
+      <button class="stepper-btn" onclick="adjustCount(-1)">−</button>
+      <input class="stepper-input" id="count-input" type="number" min="3" max="11" value="3"
+             oninput="syncDisplay(this.value)">
+      <button class="stepper-btn" onclick="adjustCount(1)">＋</button>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn btn-main" onclick="startGame()">Begin</button>
+      <button class="btn btn-ghost" onclick="randomize()">Random</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══ STEP 2 ══ -->
+<div id="step2" style="display:none; flex-direction:column; align-items:center; padding:56px 24px 80px; min-height:100vh;">
+
+  <div class="step-header">
+    <div class="step-eyebrow">Step 2 of 2</div>
+    <h2 class="step-title">Choose one card from each pile</h2>
+    <p class="step-note">Click a pile to see its cards, then pick one</p>
+    <div class="progress-dots" id="progress-dots"></div>
+  </div>
+
+  <div id="piles-container"></div>
+</div>
+
+<!-- ══ STEP 3 ══ -->
+<div id="step3" style="display:none; flex-direction:column; align-items:center; padding:56px 24px 100px; min-height:100vh;">
+  <div class="step-header">
+    <div class="step-eyebrow">Your reading</div>
+    <h2 class="step-title">The Cards Speak</h2>
+    <p class="step-note">upright or reversed — the message is yours to interpret</p>
+  </div>
+
+  <div id="results"></div>
+
+  <button class="btn-restart" onclick="restart()">Read Again</button>
+</div>
+
+<!-- ══ PILE CARD PANEL (overlay) ══ -->
+<div class="pile-list-panel" id="pile-panel">
+  <div class="panel-header">
+    <div class="panel-eyebrow" style="font-family:'Jost',sans-serif;font-size:0.68rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--text-dim);margin-bottom:6px;" id="panel-eyebrow"></div>
+    <div class="panel-title" id="panel-title"></div>
+    <div class="panel-sub">Select one card from this pile</div>
+    <button class="panel-close" onclick="closePanel()">✕</button>
+  </div>
+  <div class="panel-cards-grid" id="panel-cards-grid"></div>
+</div>
+
+<script>
+/* ── DATA ── */
+const ALL_CARDS = [
+  {id:0,name:"The Fool",element:"Major",img:"/static/cards/0.jpg",up:"新开始，冒险，纯真，不计后果",rev:"鲁莽，轻率，冒险的盲目性"},
+  {id:1,name:"The Magician",element:"Major",img:"/static/cards/1.jpg",up:"意志力，创造力，展现天赋",rev:"操纵，意志消沉，未发挥潜力"},
+  {id:2,name:"The High Priestess",element:"Major",img:"/static/cards/2.webp",up:"直觉，无意识，深层知识",rev:"压抑，忽视直觉，秘密被揭露"},
+  {id:3,name:"The Empress",element:"Major",img:"/static/cards/3.webp",up:"丰饶，培育，母性，自然",rev:"依赖，窒息的关爱，创造力匮乏"},
+  {id:4,name:"The Emperor",element:"Major",img:"/static/cards/4.webp",up:"权威，结构，控制，稳定性",rev:"暴政，僵化，缺乏自律"},
+  {id:5,name:"The Hierophant",element:"Major",img:"/static/cards/5.webp",up:"传统，信仰，社会规范",rev:"挑战现状，打破规则，个人主义"},
+  {id:6,name:"The Lovers",element:"Major",img:"/static/cards/6.webp",up:"爱，和谐，价值观对齐，抉择",rev:"不和谐，价值观失调，抉择困难"},
+  {id:7,name:"The Chariot",element:"Major",img:"/static/cards/7.webp",up:"意志，胜利，专注，野心",rev:"缺乏方向，失控，侵略性"},
+  {id:8,name:"Strength",element:"Major",img:"/static/cards/8.webp",up:"勇气，同情心，专注，耐心",rev:"自我怀疑，软弱，愤怒失控"},
+  {id:9,name:"The Hermit",element:"Major",img:"/static/cards/9.webp",up:"内省，指引，独处",rev:"孤立，退缩，过度分析"},
+  {id:10,name:"Wheel of Fortune",element:"Major",img:"/static/cards/10.webp",up:"变化，命运，循环，转折点",rev:"不幸，抵制变化，失控"},
+  {id:11,name:"Justice",element:"Major",img:"/static/cards/11.webp",up:"正义，公平，真相，因果",rev:"不公，偏见，缺乏责任感"},
+  {id:12,name:"The Hanged Man",element:"Major",img:"/static/cards/12.webp",up:"暂停，放下，新视角",rev:"逃避，拖延，牺牲无效"},
+  {id:13,name:"Death",element:"Major",img:"/static/cards/13.webp",up:"结束，转化，放手，新生",rev:"抗拒变化，停滞，恐惧转变"},
+  {id:14,name:"Temperance",element:"Major",img:"/static/cards/14.webp",up:"平衡，节制，耐心，融合",rev:"失衡，过度，缺乏远见"},
+  {id:15,name:"The Devil",element:"Major",img:"/static/cards/15.webp",up:"束缚，上瘾，唯物主义",rev:"解脱，觉醒，打破枷锁"},
+  {id:16,name:"The Tower",element:"Major",img:"/static/cards/16.webp",up:"突变，混乱，启示，崩溃",rev:"避免灾难，恐惧变化，延迟崩溃"},
+  {id:17,name:"The Star",element:"Major",img:"/static/cards/17.webp",up:"希望，灵感，宁静，治愈",rev:"绝望，缺乏信心，灰心丧气"},
+  {id:18,name:"The Moon",element:"Major",img:"/static/cards/18.webp",up:"幻觉，恐惧，直觉，焦虑",rev:"释放恐惧，真相大白，困惑消散"},
+  {id:19,name:"The Sun",element:"Major",img:"/static/cards/19.webp",up:"积极，成功，活力，真理",rev:"暂时阴霾，过度自信，悲观"},
+  {id:20,name:"Judgement",element:"Major",img:"/static/cards/20.webp",up:"审判，重生，清算，召唤",rev:"自我怀疑，拒绝改变，忽视号召"},
+  {id:21,name:"The World",element:"Major",img:"/static/cards/21.webp",up:"圆满，整合，达成，成就",rev:"未竟之事，缺乏终结，空虚"},
+  {id:22,name:"Ace of Wands",element:"Wands",img:"/static/cards/22.webp",up:"灵感，新动力，潜在机会",rev:"延迟，计划受阻，缺乏热情"},
+  {id:23,name:"Two of Wands",element:"Wands",img:"/static/cards/23.webp",up:"规划，决策，未来展望",rev:"恐惧未知，计划失败，犹豫"},
+  {id:24,name:"Three of Wands",element:"Wands",img:"/static/cards/24.webp",up:"扩张，远见，进取心",rev:"延迟，限制，缺乏远见"},
+  {id:25,name:"Four of Wands",element:"Wands",img:"/static/cards/25.webp",up:"庆典，稳定，社群，和谐",rev:"缺乏安全感，家庭冲突，动荡"},
+  {id:26,name:"Five of Wands",element:"Wands",img:"/static/cards/26.webp",up:"冲突，竞争，摩擦",rev:"避免冲突，追求妥协，释放紧张"},
+  {id:27,name:"Six of Wands",element:"Wands",img:"/static/cards/27.webp",up:"胜利，公认，自信",rev:"虚荣，失败，缺乏认可"},
+  {id:28,name:"Seven of Wands",element:"Wands",img:"/static/cards/28.webp",up:"捍卫立场，毅力，挑战",rev:"不堪重负，放弃，被击败"},
+  {id:29,name:"Eight of Wands",element:"Wands",img:"/static/cards/29.webp",up:"快速行动，进展，沟通",rev:"延迟，混乱，缺乏焦点"},
+  {id:30,name:"Nine of Wands",element:"Wands",img:"/static/cards/30.webp",up:"坚持，韧性，防御",rev:"防御过度，疲惫，防御崩溃"},
+  {id:31,name:"Ten of Wands",element:"Wands",img:"/static/cards/31.webp",up:"负担，责任，过劳",rev:"学会放手，分担任务，不堪重负"},
+  {id:32,name:"Page of Wands",element:"Wands",img:"/static/cards/32.webp",up:"新点子，热情，探索",rev:"缺乏方向，坏消息，急躁"},
+  {id:33,name:"Knight of Wands",element:"Wands",img:"/static/cards/33.webp",up:"冒险，能量，冲动",rev:"鲁莽，挫败，脾气暴躁"},
+  {id:34,name:"Queen of Wands",element:"Wands",img:"/static/cards/34.webp",up:"自信，社交，独立",rev:"善妒，易怒，需求过度"},
+  {id:35,name:"King of Wands",element:"Wands",img:"/static/cards/35.webp",up:"领导力，愿景，魅力",rev:"独裁，支配，鲁莽"},
+  {id:36,name:"Ace of Cups",element:"Cups",img:"/static/cards/36.webp",up:"爱，同情，创意，情绪新开始",rev:"情绪阻滞，压抑，失望"},
+  {id:37,name:"Two of Cups",element:"Cups",img:"/static/cards/37.webp",up:"联结，伙伴，吸引",rev:"失衡，误解，关系破裂"},
+  {id:38,name:"Three of Cups",element:"Cups",img:"/static/cards/38.webp",up:"庆祝，友谊，社群",rev:"过度放纵，疏远，缺乏社交"},
+  {id:39,name:"Four of Cups",element:"Cups",img:"/static/cards/39.webp",up:"冥想，冷漠，厌倦",rev:"重获热情，新的视角，走出厌倦"},
+  {id:40,name:"Five of Cups",element:"Cups",img:"/static/cards/40.webp",up:"遗憾，损失，悲伤",rev:"接受，修复，放下过去"},
+  {id:41,name:"Six of Cups",element:"Cups",img:"/static/cards/41.webp",up:"怀旧，单纯，快乐的回忆",rev:"执着过去，无法前行，失去童真"},
+  {id:42,name:"Seven of Cups",element:"Cups",img:"/static/cards/42.webp",up:"选择，幻象，想象力",rev:"逃避现实，选择困难，幻灭"},
+  {id:43,name:"Eight of Cups",element:"Cups",img:"/static/cards/43.webp",up:"放弃，寻求深度，离去",rev:"由于恐惧而不敢放弃，停滞"},
+  {id:44,name:"Nine of Cups",element:"Cups",img:"/static/cards/44.webp",up:"满足，愿望达成，欢愉",rev:"虚荣，贪婪，不满足"},
+  {id:45,name:"Ten of Cups",element:"Cups",img:"/static/cards/45.webp",up:"幸福，和谐，家庭满足",rev:"家庭不和，价值观冲突"},
+  {id:46,name:"Page of Cups",element:"Cups",img:"/static/cards/46.webp",up:"创意，直觉，情感表达",rev:"情绪不稳定，不成熟，情感困扰"},
+  {id:47,name:"Knight of Cups",element:"Cups",img:"/static/cards/47.webp",up:"浪漫，提案，理想主义",rev:"情绪化，虚伪，不切实际"},
+  {id:48,name:"Queen of Cups",element:"Cups",img:"/static/cards/48.webp",up:"感性，同情，支持",rev:"依赖，情绪失控，边界模糊"},
+  {id:49,name:"King of Cups",element:"Cups",img:"/static/cards/49.webp",up:"情绪成熟，冷静，平衡",rev:"冷漠，情绪操纵，压抑"},
+  {id:50,name:"Ace of Swords",element:"Swords",img:"/static/cards/50.webp",up:"清晰，突破，真相",rev:"混乱，误解，缺乏思路"},
+  {id:51,name:"Two of Swords",element:"Swords",img:"/static/cards/51.webp",up:"僵局，抉择，回避",rev:"真相大白，走出困局，被迫面对"},
+  {id:52,name:"Three of Swords",element:"Swords",img:"/static/cards/52.webp",up:"心碎，痛苦，悲伤",rev:"治愈，和解，放下痛苦"},
+  {id:53,name:"Four of Swords",element:"Swords",img:"/static/cards/53.webp",up:"休息，恢复，冥想",rev:"过度疲劳，恢复必要，恢复中"},
+  {id:54,name:"Five of Swords",element:"Swords",img:"/static/cards/54.webp",up:"冲突，失败，空虚的赢",rev:"放下争端，反思失败"},
+  {id:55,name:"Six of Swords",element:"Swords",img:"/static/cards/55.webp",up:"过40渡，改变，寻求平静",rev:"陷入困境，抗拒改变"},
+  {id:56,name:"Seven of Swords",element:"Swords",img:"/static/cards/56.webp",up:"诡计，策略，秘密",rev:"反思，暴露，重归诚实"},
+  {id:57,name:"Eight of Swords",element:"Swords",img:"/static/cards/57.webp",up:"受限，困惑，自我限制",rev:"解放，突破限制，自我觉醒"},
+  {id:58,name:"Nine of Swords",element:"Swords",img:"/static/cards/58.webp",up:"焦虑，绝望，梦魇",rev:"寻找帮助，克服恐惧，面对现实"},
+  {id:59,name:"Ten of Swords",element:"Swords",img:"/static/cards/59.webp",up:"终结，背叛，彻底失败",rev:"复原，重生，接受现实"},
+  {id:60,name:"Page of Swords",element:"Swords",img:"/static/cards/60.webp",up:"好奇，警觉，新思路",rev:"急躁，防御性强，多疑"},
+  {id:61,name:"Knight of Swords",element:"Swords",img:"/static/cards/61.webp",up:"果断，野心，直接",rev:"冲动，傲慢，破坏力"},
+  {id:62,name:"Queen of Swords",element:"Swords",img:"/static/cards/62.webp",up:"客观，诚实，独立",rev:"严苛，冷酷，心计"},
+  {id:63,name:"King of Swords",element:"Swords",img:"/static/cards/63.webp",up:"理性，权威，判断力",rev:"独断，缺乏同情，滥用权力"},
+  {id:64,name:"Ace of Pentacles",element:"Pentacles",img:"/static/cards/64.webp",up:"财富，机会，繁荣",rev:"浪费，错失机会，缺乏规划"},
+  {id:65,name:"Two of Pentacles",element:"Pentacles",img:"/static/cards/65.webp",up:"平衡，适应力，多任务",rev:"失衡，混乱，缺乏重点"},
+  {id:66,name:"Three of Pentacles",element:"Pentacles",img:"/static/cards/66.webp",up:"协作，技巧，学习",rev:"缺乏协调，技能不足，忽视反馈"},
+  {id:67,name:"Four of Pentacles",element:"Pentacles",img:"/static/cards/67.webp",up:"控制，存钱，占有欲",rev:"过度开支，放手，贪婪"},
+  {id:68,name:"Five of Pentacles",element:"Pentacles",img:"/static/cards/68.webp",up:"贫困，被孤立，困难",rev:"获得帮助，复苏，恢复希望"},
+  {id:69,name:"Six of Pentacles",element:"Pentacles",img:"/static/cards/69.webp",up:"慷慨，分享，施与受",rev:"自私，财务不均，贪婪"},
+  {id:70,name:"Seven of Pentacles",element:"Pentacles",img:"/static/cards/70.webp",up:"耕耘，耐心，评估",rev:"没有成果，缺乏耐性，工作无效"},
+  {id:71,name:"Eight of Pentacles",element:"Pentacles",img:"/static/cards/71.webp",up:"勤奋，专精，细节",rev:"工作倦怠，缺乏专注，停滞"},
+  {id:72,name:"Nine of Pentacles",element:"Pentacles",img:"/static/cards/72.webp",up:"独立，自给自足，成就",rev:"依赖，财务困境，缺乏纪律"},
+  {id:73,name:"Ten of Pentacles",element:"Pentacles",img:"/static/cards/73.webp",up:"遗产，安全，家族传承",rev:"财务动荡，缺乏保障，家庭冲突"},
+  {id:74,name:"Page of Pentacles",element:"Pentacles",img:"/static/cards/74.webp",up:"学习，规划，务实",rev:"梦想不切实际，拖延，失败"},
+  {id:75,name:"Knight of Pentacles",element:"Pentacles",img:"/static/cards/75.webp",up:"尽责，效率，耐心",rev:"僵化，停滞，懒惰"},
+  {id:76,name:"Queen of Pentacles",element:"Pentacles",img:"/static/cards/76.webp",up:"滋养，务实，安全感",rev:"自我放纵，不切实际，忽视细节"},
+  {id:77,name:"King of Pentacles",element:"Pentacles",img:"/static/cards/77.webp",up:"成功，繁荣，稳健",rev:"贪婪，固执，唯物主义"}
+];
+
+/* ── State ── */
+let state = { piles: [], selected: [], total: 0, openPileIdx: null };
+
+/* ── Utils ── */
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+/* ── Step 1 controls ── */
+function adjustCount(d) {
+  const inp = document.getElementById('count-input');
+  let v = Math.max(3, Math.min(11, parseInt(inp.value) + d));
+  inp.value = v;
+  document.getElementById('count-display').textContent = v;
+}
+
+function syncDisplay(v) {
+  v = Math.max(3, Math.min(11, parseInt(v) || 3));
+  document.getElementById('count-display').textContent = v;
+}
+
+function randomize() {
+  const v = Math.floor(Math.random() * 9) + 3;
+  document.getElementById('count-input').value = v;
+  document.getElementById('count-display').textContent = v;
+}
+
+/* ── Start ── */
+function startGame() {
+  const count = Math.max(3, Math.min(11, parseInt(document.getElementById('count-input').value) || 3));
+  const deck = shuffle(ALL_CARDS);
+  const piles = Array.from({ length: count }, () => []);
+  deck.forEach((card, i) => piles[i % count].push(card));
+
+  state = { piles, selected: [], total: count, openPileIdx: null };
+
+  document.getElementById('step1').style.display = 'none';
+  document.getElementById('step2').style.display = 'flex';
+
+  renderDots();
+  renderPiles();
+}
+
+/* ── Progress dots ── */
+function renderDots() {
+  const container = document.getElementById('progress-dots');
+  container.innerHTML = '';
+  for (let i = 0; i < state.total; i++) {
+    const d = document.createElement('div');
+    d.className = 'pdot';
+    d.id = `dot-${i}`;
+    container.appendChild(d);
+  }
+}
+
+function updateDots() {
+  for (let i = 0; i < state.total; i++) {
+    const dot = document.getElementById(`dot-${i}`);
+    if (i < state.selected.length) dot.className = 'pdot done';
+    else if (i === state.selected.length) dot.className = 'pdot active';
+    else dot.className = 'pdot';
+  }
+}
+
+/* ── Card back SVG ── */
+function backSVG() {
+  return `<div class="cback-inner">
+    <svg viewBox="0 0 44 44" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="22" cy="22" r="18" fill="none" stroke="var(--rose)" stroke-width="0.8"/>
+      <circle cx="22" cy="22" r="12" fill="none" stroke="var(--rose)" stroke-width="0.5"/>
+      <line x1="22" y1="4" x2="22" y2="40" stroke="var(--rose)" stroke-width="0.4"/>
+      <line x1="4" y1="22" x2="40" y2="22" stroke="var(--rose)" stroke-width="0.4"/>
+      <circle cx="22" cy="22" r="3" fill="var(--lotus-dim)"/>
+    </svg>
+  </div>`;
+}
+
+/* ── Render piles ── */
+function renderPiles() {
+  const container = document.getElementById('piles-container');
+  container.innerHTML = '';
+
+  state.piles.forEach((pile, idx) => {
+    const col = document.createElement('div');
+    col.className = 'pile-col';
+    col.id = `pile-col-${idx}`;
+
+    const fan = document.createElement('div');
+    fan.className = 'pile-fan';
+
+    // 3 card back layers
+    for (let k = 0; k < 3; k++) {
+      const cb = document.createElement('div');
+      cb.className = 'cback';
+      cb.innerHTML = backSVG();
+      fan.appendChild(cb);
+    }
+
+    // card count badge
+    const badge = document.createElement('div');
+    badge.className = 'pile-count-badge';
+    badge.id = `badge-${idx}`;
+    badge.textContent = pile.length;
+    fan.appendChild(badge);
+
+    const label = document.createElement('div');
+    label.className = 'pile-label';
+    label.textContent = `Pile ${idx + 1}`;
+
+    col.appendChild(fan);
+    col.appendChild(label);
+    col.onclick = () => openPanel(idx);
+    container.appendChild(col);
+  });
+
+  updateDots();
+}
+
+/* ── Open pile panel ── */
+function openPanel(pileIdx) {
+  const col = document.getElementById(`pile-col-${pileIdx}`);
+  if (col.classList.contains('used')) return;
+
+  state.openPileIdx = pileIdx;
+  const pile = state.piles[pileIdx];
+
+  document.getElementById('panel-eyebrow').textContent = `Pile ${pileIdx + 1}  ·  ${pile.length} cards`;
+  document.getElementById('panel-title').textContent = 'Choose your card';
+
+  const grid = document.getElementById('panel-cards-grid');
+  grid.innerHTML = '';
+
+  pile.forEach((card, i) => {
+    const el = document.createElement('div');
+    el.className = 'panel-card';
+    el.innerHTML = `
+      <div class="panel-card-img">
+        ${backSVG()}
+      </div>
+      <div class="panel-card-name"># ${i + 1}</div>
+    `;
+    el.onclick = () => selectCard(pileIdx, card);
+    grid.appendChild(el);
+  });
+
+  document.getElementById('pile-panel').classList.add('open');
+}
+
+function closePanel() {
+  document.getElementById('pile-panel').classList.remove('open');
+  state.openPileIdx = null;
+}
+
+/* ── Select card from panel ── */
+function selectCard(pileIdx, card) {
+  closePanel();
+
+  const isReversed = Math.random() > 0.5;
+  state.selected.push({ ...card, isReversed, pileIdx });
+
+  // Mark pile as used
+  const col = document.getElementById(`pile-col-${pileIdx}`);
+  col.classList.add('used');
+
+  updateDots();
+
+  if (state.selected.length === state.total) {
+    setTimeout(showResults, 400);
+  }
+}
+
+/* ── Show results ── */
+function showResults() {
+  document.getElementById('step2').style.display = 'none';
+  document.getElementById('step3').style.display = 'flex';
+
+  const container = document.getElementById('results');
+  container.innerHTML = '';
+
+  state.selected.forEach((card, i) => {
+    const meaning = card.isReversed ? card.rev : card.up;
+    const el = document.createElement('div');
+    el.className = 'result-card';
+    el.style.animationDelay = (i * 0.1) + 's';
+    el.innerHTML = `
+      <div class="result-element">${card.element}</div>
+      <div class="result-img-wrap ${card.isReversed ? 'reversed' : ''}">
+        <img src="${card.img}" alt="${card.name}"
+             onerror="this.parentElement.style.background='var(--bg2)'">
+        ${card.isReversed ? '<div class="rev-tag">Reversed</div>' : ''}
+      </div>
+      <div class="result-name">${card.name}</div>
+      <div class="result-meaning">${meaning}</div>
+    `;
+    container.appendChild(el);
+  });
+}
+
+/* ── Restart ── */
+function restart() {
+  state = { piles: [], selected: [], total: 0, openPileIdx: null };
+  document.getElementById('results').innerHTML = '';
+  document.getElementById('step3').style.display = 'none';
+  document.getElementById('step1').style.display = 'flex';
+  document.getElementById('count-input').value = 3;
+  document.getElementById('count-display').textContent = '3';
+}
+</script>
+</body>
+</html>

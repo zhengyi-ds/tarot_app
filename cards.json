@@ -1,0 +1,626 @@
+[
+    {
+      "id": 0,
+      "name": "The Fool",
+      "element": "Major",
+      "img": "/static/cards/0.jpg",
+      "up_meaning": "新开始，冒险，纯真，不计后果",
+      "rev_meaning": "鲁莽，轻率，冒险的盲目性"
+    },
+    {
+      "id": 1,
+      "name": "The Magician",
+      "element": "Major",
+      "img": "/static/cards/1.jpg",
+      "up_meaning": "意志力，创造力，展现天赋",
+      "rev_meaning": "操纵，意志消沉，未发挥潜力"
+    },
+    {
+      "id": 2,
+      "name": "The High Priestess",
+      "element": "Major",
+      "img": "/static/cards/2.webp",
+      "up_meaning": "直觉，无意识，深层知识",
+      "rev_meaning": "压抑，忽视直觉，秘密被揭露"
+    },
+    {
+      "id": 3,
+      "name": "The Empress",
+      "element": "Major",
+      "img": "/static/cards/3.webp",
+      "up_meaning": "丰饶，培育，母性，自然",
+      "rev_meaning": "依赖，窒息的关爱，创造力匮乏"
+    },
+    {
+      "id": 4,
+      "name": "The Emperor",
+      "element": "Major",
+      "img": "/static/cards/4.webp",
+      "up_meaning": "权威，结构，控制，稳定性",
+      "rev_meaning": "暴政，僵化，缺乏自律"
+    },
+    {
+      "id": 5,
+      "name": "The Hierophant",
+      "element": "Major",
+      "img": "/static/cards/5.webp",
+      "up_meaning": "传统，信仰，社会规范",
+      "rev_meaning": "挑战现状，打破规则，个人主义"
+    },
+    {
+      "id": 6,
+      "name": "The Lovers",
+      "element": "Major",
+      "img": "/static/cards/6.webp",
+      "up_meaning": "爱，和谐，价值观对齐，抉择",
+      "rev_meaning": "不和谐，价值观失调，抉择困难"
+    },
+    {
+      "id": 7,
+      "name": "The Chariot",
+      "element": "Major",
+      "img": "/static/cards/7.webp",
+      "up_meaning": "意志，胜利，专注，野心",
+      "rev_meaning": "缺乏方向，失控，侵略性"
+    },
+    {
+      "id": 8,
+      "name": "Strength",
+      "element": "Major",
+      "img": "/static/cards/8.webp",
+      "up_meaning": "勇气，同情心，专注，耐心",
+      "rev_meaning": "自我怀疑，软弱，愤怒失控"
+    },
+    {
+      "id": 9,
+      "name": "The Hermit",
+      "element": "Major",
+      "img": "/static/cards/9.webp",
+      "up_meaning": "内省，指引，独处",
+      "rev_meaning": "孤立，退缩，过度分析"
+    },
+    {
+      "id": 10,
+      "name": "Wheel of Fortune",
+      "element": "Major",
+      "img": "/static/cards/10.webp",
+      "up_meaning": "变化，命运，循环，转折点",
+      "rev_meaning": "不幸，抵制变化，失控"
+    },
+    {
+      "id": 11,
+      "name": "Justice",
+      "element": "Major",
+      "img": "/static/cards/11.webp",
+      "up_meaning": "正义，公平，真相，因果",
+      "rev_meaning": "不公，偏见，缺乏责任感"
+    },
+    {
+      "id": 12,
+      "name": "The Hanged Man",
+      "element": "Major",
+      "img": "/static/cards/12.webp",
+      "up_meaning": "暂停，放下，新视角",
+      "rev_meaning": "逃避，拖延，牺牲无效"
+    },
+    {
+      "id": 13,
+      "name": "Death",
+      "element": "Major",
+      "img": "/static/cards/13.webp",
+      "up_meaning": "结束，转化，放手，新生",
+      "rev_meaning": "抗拒变化，停滞，恐惧转变"
+    },
+    {
+      "id": 14,
+      "name": "Temperance",
+      "element": "Major",
+      "img": "/static/cards/14.webp",
+      "up_meaning": "平衡，节制，耐心，融合",
+      "rev_meaning": "失衡，过度，缺乏远见"
+    },
+    {
+      "id": 15,
+      "name": "The Devil",
+      "element": "Major",
+        "img": "/static/cards/15.webp",
+      "up_meaning": "束缚，上瘾，唯物主义",
+      "rev_meaning": "解脱，觉醒，打破枷锁"
+    },
+    {
+      "id": 16,
+      "name": "The Tower",
+      "element": "Major",
+      "img": "/static/cards/16.webp",
+      "up_meaning": "突变，混乱，启示，崩溃",
+      "rev_meaning": "避免灾难，恐惧变化，延迟崩溃"
+    },
+    {
+      "id": 17,
+      "name": "The Star",
+      "element": "Major",
+      "img": "/static/cards/17.webp",
+      "up_meaning": "希望，灵感，宁静，治愈",
+      "rev_meaning": "绝望，缺乏信心，灰心丧气"
+    },
+    {
+      "id": 18,
+      "name": "The Moon",
+      "element": "Major",
+      "img": "/static/cards/18.webp",
+      "up_meaning": "幻觉，恐惧，直觉，焦虑",
+      "rev_meaning": "释放恐惧，真相大白，困惑消散"
+    },
+    {
+      "id": 19,
+      "name": "The Sun",
+      "element": "Major",
+      "img": "/static/cards/19.webp",
+      "up_meaning": "积极，成功，活力，真理",
+      "rev_meaning": "暂时阴霾，过度自信，悲观"
+    },
+    {
+      "id": 20,
+      "name": "Judgement",
+      "element": "Major",
+      "img": "/static/cards/20.webp",
+      "up_meaning": "审判，重生，清算，召唤",
+      "rev_meaning": "自我怀疑，拒绝改变，忽视号召"
+    },
+    {
+      "id": 21,
+      "name": "The World",
+      "element": "Major",
+      "img": "/static/cards/21_world.webp",
+      "up_meaning": "圆满，整合，达成，成就",
+      "rev_meaning": "未竟之事，缺乏终结，空虚"
+    },
+    {
+      "id": 22,
+      "name": "Ace of Wands",
+      "element": "Wands",
+      "img": "/static/cards/22_ace_wands.webp",
+      "up_meaning": "灵感，新动力，潜在机会",
+      "rev_meaning": "延迟，计划受阻，缺乏热情"
+    },
+    {
+      "id": 23,
+      "name": "Two of Wands",
+      "element": "Wands",
+      "img": "/static/cards/23_two_wands.webp",
+      "up_meaning": "规划，决策，未来展望",
+      "rev_meaning": "恐惧未知，计划失败，犹豫"
+    },
+    {
+      "id": 24,
+      "name": "Three of Wands",
+      "element": "Wands",
+      "img": "/static/cards/24_three_wands.webp",
+      "up_meaning": "扩张，远见，进取心",
+      "rev_meaning": "延迟，限制，缺乏远见"
+    },
+    {
+      "id": 25,
+      "name": "Four of Wands",
+      "element": "Wands",
+      "img": "/static/cards/25_four_wands.webp",
+      "up_meaning": "庆典，稳定，社群，和谐",
+      "rev_meaning": "缺乏安全感，家庭冲突，动荡"
+    },
+    {
+      "id": 26,
+      "name": "Five of Wands",
+      "element": "Wands",
+      "img": "/static/cards/26_five_wands.webp",
+      "up_meaning": "冲突，竞争，摩擦",
+      "rev_meaning": "避免冲突，追求妥协，释放紧张"
+    },
+    {
+      "id": 27,
+      "name": "Six of Wands",
+      "element": "Wands",
+      "img": "/static/cards/27_six_wands.webp",
+      "up_meaning": "胜利，公认，自信",
+      "rev_meaning": "虚荣，失败，缺乏认可"
+    },
+    {
+      "id": 28,
+      "name": "Seven of Wands",
+      "element": "Wands",
+      "img": "/static/cards/28_seven_wands.webp",
+      "up_meaning": "捍卫立场，毅力，挑战",
+      "rev_meaning": "不堪重负，放弃，被击败"
+    },
+    {
+      "id": 29,
+      "name": "Eight of Wands",
+      "element": "Wands",
+      "img": "/static/cards/29_eight_wands.webp",
+      "up_meaning": "快速行动，进展，沟通",
+      "rev_meaning": "延迟，混乱，缺乏焦点"
+    },
+    {
+      "id": 30,
+      "name": "Nine of Wands",
+      "element": "Wands",
+      "img": "/static/cards/30_nine_wands.webp",
+      "up_meaning": "坚持，韧性，防御",
+      "rev_meaning": "防御过度，疲惫，防御崩溃"
+    },
+    {
+      "id": 31,
+      "name": "Ten of Wands",
+      "element": "Wands",
+      "img": "/static/cards/31_ten_wands.webp",
+      "up_meaning": "负担，责任，过劳",
+      "rev_meaning": "学会放手，分担任务，不堪重负"
+    },
+    {
+      "id": 32,
+      "name": "Page of Wands",
+      "element": "Wands",
+      "img": "/static/cards/32_page_wands.webp",
+      "up_meaning": "新点子，热情，探索",
+      "rev_meaning": "缺乏方向，坏消息，急躁"
+    },
+    {
+      "id": 33,
+      "name": "Knight of Wands",
+      "element": "Wands",
+      "img": "/static/cards/33_knight_wands.webp",
+      "up_meaning": "冒险，能量，冲动",
+      "rev_meaning": "鲁莽，挫败，脾气暴躁"
+    },
+    {
+      "id": 34,
+      "name": "Queen of Wands",
+      "element": "Wands",
+      "img": "/static/cards/34_queen_wands.webp",
+      "up_meaning": "自信，社交，独立",
+      "rev_meaning": "善妒，易怒，需求过度"
+    },
+    {
+      "id": 35,
+      "name": "King of Wands",
+      "element": "Wands",
+      "img": "/static/cards/35_king_wands.webp",
+      "up_meaning": "领导力，愿景，魅力",
+      "rev_meaning": "独裁，支配，鲁莽"
+    },
+    {
+      "id": 36,
+      "name": "Ace of Cups",
+      "element": "Cups",
+      "img": "/static/cards/36_ace_cups.webp",
+      "up_meaning": "爱，同情，创意，情绪新开始",
+      "rev_meaning": "情绪阻滞，压抑，失望"
+    },
+    {
+      "id": 37,
+      "name": "Two of Cups",
+      "element": "Cups",
+      "img": "/static/cards/37_two_cups.webp",
+      "up_meaning": "联结，伙伴，吸引",
+      "rev_meaning": "失衡，误解，关系破裂"
+    },
+    {
+      "id": 38,
+      "name": "Three of Cups",
+      "element": "Cups",
+      "img": "/static/cards/38_three_cups.webp",
+      "up_meaning": "庆祝，友谊，社群",
+      "rev_meaning": "过度放纵，疏远，缺乏社交"
+    },
+    {
+      "id": 39,
+      "name": "Four of Cups",
+      "element": "Cups",
+      "img": "/static/cards/39_four_cups.webp",
+      "up_meaning": "冥想，冷漠，厌倦",
+      "rev_meaning": "重获热情，新的视角，走出厌倦"
+    },
+    {
+      "id": 40,
+      "name": "Five of Cups",
+      "element": "Cups",
+      "img": "/static/cards/40_five_cups.webp",
+      "up_meaning": "遗憾，损失，悲伤",
+      "rev_meaning": "接受，修复，放下过去"
+    },
+    {
+      "id": 41,
+      "name": "Six of Cups",
+      "element": "Cups",
+      "img": "/static/cards/41_six_cups.webp",
+      "up_meaning": "怀旧，单纯，快乐的回忆",
+      "rev_meaning": "执着过去，无法前行，失去童真"
+    },
+    {
+      "id": 42,
+      "name": "Seven of Cups",
+      "element": "Cups",
+      "img": "/static/cards/42_seven_cups.webp",
+      "up_meaning": "选择，幻象，想象力",
+      "rev_meaning": "逃避现实，选择困难，幻灭"
+    },
+    {
+      "id": 43,
+      "name": "Eight of Cups",
+      "element": "Cups",
+      "img": "/static/cards/43_eight_cups.webp",
+      "up_meaning": "放弃，寻求深度，离去",
+      "rev_meaning": "由于恐惧而不敢放弃，停滞"
+    },
+    {
+      "id": 44,
+      "name": "Nine of Cups",
+      "element": "Cups",
+      "img": "/static/cards/44_nine_cups.webp",
+      "up_meaning": "满足，愿望达成，欢愉",
+      "rev_meaning": "虚荣，贪婪，不满足"
+    },
+    {
+      "id": 45,
+      "name": "Ten of Cups",
+      "element": "Cups",
+      "img": "/static/cards/45_ten_cups.webp",
+      "up_meaning": "幸福，和谐，家庭满足",
+      "rev_meaning": "家庭不和，价值观冲突"
+    },
+    {
+      "id": 46,
+      "name": "Page of Cups",
+      "element": "Cups",
+      "img": "/static/cards/46_page_cups.webp",
+      "up_meaning": "创意，直觉，情感表达",
+      "rev_meaning": "情绪不稳定，不成熟，情感困扰"
+    },
+    {
+      "id": 47,
+      "name": "Knight of Cups",
+      "element": "Cups",
+      "img": "/static/cards/47_knight_cups.webp",
+      "up_meaning": "浪漫，提案，理想主义",
+      "rev_meaning": "情绪化，虚伪，不切实际"
+    },
+    {
+      "id": 48,
+      "name": "Queen of Cups",
+      "element": "Cups",
+      "img": "/static/cards/48_queen_cups.webp",
+      "up_meaning": "感性，同情，支持",
+      "rev_meaning": "依赖，情绪失控，边界模糊"
+    },
+    {
+      "id": 49,
+      "name": "King of Cups",
+      "element": "Cups",
+      "img": "/static/cards/49_king_cups.webp",
+      "up_meaning": "情绪成熟，冷静，平衡",
+      "rev_meaning": "冷漠，情绪操纵，压抑"
+    },
+    {
+      "id": 50,
+      "name": "Ace of Swords",
+      "element": "Swords",
+      "img": "/static/cards/50_ace_swords.webp",
+      "up_meaning": "清晰，突破，真相",
+      "rev_meaning": "混乱，误解，缺乏思路"
+    },
+    {
+      "id": 51,
+      "name": "Two of Swords",
+      "element": "Swords",
+      "img": "/static/cards/51_two_swords.webp",
+      "up_meaning": "僵局，抉择，回避",
+      "rev_meaning": "真相大白，走出困局，被迫面对"
+    },
+    {
+      "id": 52,
+      "name": "Three of Swords",
+      "element": "Swords",
+      "img": "/static/cards/52_three_swords.webp",
+      "up_meaning": "心碎，痛苦，悲伤",
+      "rev_meaning": "治愈，和解，放下痛苦"
+    },
+    {
+      "id": 53,
+      "name": "Four of Swords",
+      "element": "Swords",
+      "img": "/static/cards/53_four_swords.webp",
+      "up_meaning": "休息，恢复，冥想",
+      "rev_meaning": "过度疲劳，恢复必要，恢复中"
+    },
+    {
+      "id": 54,
+      "name": "Five of Swords",
+      "element": "Swords",
+      "img": "/static/cards/54_five_swords.webp",
+      "up_meaning": "冲突，失败，空虚的赢",
+      "rev_meaning": "放下争端，反思失败"
+    },
+    {
+      "id": 55,
+      "name": "Six of Swords",
+      "element": "Swords",
+      "img": "/static/cards/55_six_swords.webp",
+      "up_meaning": "过渡，改变，寻求平静",
+      "rev_meaning": "陷入困境，抗拒改变"
+    },
+    {
+      "id": 56,
+      "name": "Seven of Swords",
+      "element": "Swords",
+      "img": "/static/cards/56_seven_swords.webp",
+      "up_meaning": "诡计，策略，秘密",
+      "rev_meaning": "反思，暴露，重归诚实"
+    },
+    {
+      "id": 57,
+      "name": "Eight of Swords",
+      "element": "Swords",
+      "img": "/static/cards/57_eight_swords.webp",
+      "up_meaning": "受限，困惑，自我限制",
+      "rev_meaning": "解放，突破限制，自我觉醒"
+    },
+    {
+      "id": 58,
+      "name": "Nine of Swords",
+      "element": "Swords",
+      "img": "/static/cards/58_nine_swords.webp",
+      "up_meaning": "焦虑，绝望，梦魇",
+      "rev_meaning": "寻找帮助，克服恐惧，面对现实"
+    },
+    {
+      "id": 59,
+      "name": "Ten of Swords",
+      "element": "Swords",
+      "img": "/static/cards/59_ten_swords.webp",
+      "up_meaning": "终结，背叛，彻底失败",
+      "rev_meaning": "复原，重生，接受现实"
+    },
+    {
+      "id": 60,
+      "name": "Page of Swords",
+      "element": "Swords",
+      "img": "/static/cards/60_page_swords.webp",
+      "up_meaning": "好奇，警觉，新思路",
+      "rev_meaning": "急躁，防御性强，多疑"
+    },
+    {
+      "id": 61,
+      "name": "Knight of Swords",
+      "element": "Swords",
+      "img": "/static/cards/61_knight_swords.webp",
+      "up_meaning": "果断，野心，直接",
+      "rev_meaning": "冲动，傲慢，破坏力"
+    },
+    {
+      "id": 62,
+      "name": "Queen of Swords",
+      "element": "Swords",
+      "img": "/static/cards/62_queen_swords.webp",
+      "up_meaning": "客观，诚实，独立",
+      "rev_meaning": "严苛，冷酷，心计"
+    },
+    {
+      "id": 63,
+      "name": "King of Swords",
+      "element": "Swords",
+      "img": "/static/cards/63_king_swords.webp",
+      "up_meaning": "理性，权威，判断力",
+      "rev_meaning": "独断，缺乏同情，滥用权力"
+    },
+    {
+      "id": 64,
+      "name": "Ace of Pentacles",
+      "element": "Pentacles",
+      "img": "/static/cards/64_ace_pentacles.webp",
+      "up_meaning": "财富，机会，繁荣",
+      "rev_meaning": "浪费，错失机会，缺乏规划"
+    },
+    {
+      "id": 65,
+      "name": "Two of Pentacles",
+      "element": "Pentacles",
+      "img": "/static/cards/65_two_pentacles.webp",
+      "up_meaning": "平衡，适应力，多任务",
+      "rev_meaning": "失衡，混乱，缺乏重点"
+    },
+    {
+      "id": 66,
+      "name": "Three of Pentacles",
+      "element": "Pentacles",
+      "img": "/static/cards/66_three_pentacles.webp",
+      "up_meaning": "协作，技巧，学习",
+      "rev_meaning": "缺乏协调，技能不足，忽视反馈"
+    },
+    {
+      "id": 67,
+      "name": "Four of Pentacles",
+      "element": "Pentacles",
+      "img": "/static/cards/67_four_pentacles.webp",
+      "up_meaning": "控制，存钱，占有欲",
+      "rev_meaning": "过度开支，放手，贪婪"
+    },
+    {
+      "id": 68,
+      "name": "Five of Pentacles",
+      "element": "Pentacles",
+      "img": "/static/cards/68_five_pentacles.webp",
+      "up_meaning": "贫困，被孤立，困难",
+      "rev_meaning": "获得帮助，复苏，恢复希望"
+    },
+    {
+      "id": 69,
+      "name": "Six of Pentacles",
+      "element": "Pentacles",
+      "img": "/static/cards/69_six_pentacles.webp",
+      "up_meaning": "慷慨，分享，施与受",
+      "rev_meaning": "自私，财务不均，贪婪"
+    },
+    {
+      "id": 70,
+      "name": "Seven of Pentacles",
+      "element": "Pentacles",
+      "img": "/static/cards/70_seven_pentacles.webp",
+      "up_meaning": "耕耘，耐心，评估",
+      "rev_meaning": "没有成果，缺乏耐性，工作无效"
+    },
+    {
+      "id": 71,
+      "name": "Eight of Pentacles",
+      "element": "Pentacles",
+      "img": "/static/cards/71_eight_pentacles.webp",
+      "up_meaning": "勤奋，专精，细节",
+      "rev_meaning": "工作倦怠，缺乏专注，停滞"
+    },
+    {
+      "id": 72,
+      "name": "Nine of Pentacles",
+      "element": "Pentacles",
+      "img": "/static/cards/72_nine_pentacles.webp",
+      "up_meaning": "独立，自给自足，成就",
+      "rev_meaning": "依赖，财务困境，缺乏纪律"
+    },
+    {
+      "id": 73,
+      "name": "Ten of Pentacles",
+      "element": "Pentacles",
+      "img": "/static/cards/73_ten_pentacles.webp",
+      "up_meaning": "遗产，安全，家族传承",
+      "rev_meaning": "财务动荡，缺乏保障，家庭冲突"
+    },
+    {
+      "id": 74,
+      "name": "Page of Pentacles",
+      "element": "Pentacles",
+      "img": "/static/cards/74_page_pentacles.webp",
+      "up_meaning": "学习，规划，务实",
+      "rev_meaning": "梦想不切实际，拖延，失败"
+    },
+    {
+      "id": 75,
+      "name": "Knight of Pentacles",
+      "element": "Pentacles",
+      "img": "/static/cards/75_knight_pentacles.webp",
+      "up_meaning": "尽责，效率，耐心",
+      "rev_meaning": "僵化，停滞，懒惰"
+    },
+    {
+      "id": 76,
+      "name": "Queen of Pentacles",
+      "element": "Pentacles",
+      "img": "/static/cards/76_queen_pentacles.webp",
+      "up_meaning": "滋养，务实，安全感",
+      "rev_meaning": "自我放纵，不切实际，忽视细节"
+    },
+    {
+      "id": 77,
+      "name": "King of Pentacles",
+      "element": "Pentacles",
+      "img": "/static/cards/77_king_pentacles.webp",
+      "up_meaning": "成功，繁荣，稳健",
+      "rev_meaning": "贪婪，固执，唯物主义"
+    }
+  ]

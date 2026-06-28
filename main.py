@@ -6,20 +6,23 @@ from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
 from pydantic import BaseModel
 from typing import List
-from openai import AsyncOpenAI
 from dotenv import load_dotenv
+from google import genai
 
-# Initialize OpenAI Client
+# 加载环境变量
 load_dotenv()
-client = AsyncOpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+
+# --- 初始化 Gemini 客户端 ---
+client = genai.Client(api_key=os.getenv("GOOGLE_API_KEY"))
 
 app = FastAPI()
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
+# 加载塔罗牌数据
 with open('cards.json', 'r', encoding='utf-8') as f:
     ALL_CARDS = json.load(f)
 
-# --- Pydantic Models for AI Endpoint ---
+# --- Pydantic Models ---
 class CardDraw(BaseModel):
     name: str
     isReversed: bool
@@ -47,13 +50,14 @@ async def init_game(count: int = 3):
 @app.post("/api/interpret")
 async def interpret_reading(request: ReadingRequest):
     try:
-        # Construct a prompt describing the draw
+        # 构建卡牌描述
         cards_desc = "\n".join(
             [f"- {c.name} ({'Reversed' if c.isReversed else 'Upright'}): {c.meaning}" for c in request.cards]
         )
         
+        # 具体的解牌任务 Prompt
         prompt = f"""
-        You are a mystical, wise, and empathetic Tarot reader. The user has asked the following question: 
+        The user has asked the following question: 
         "{request.question}"
         
         They drew the following cards:
@@ -65,21 +69,21 @@ async def interpret_reading(request: ReadingRequest):
         Output the reading in clean paragraphs (do not use markdown headers, just plain text with line breaks).
         """
 
-        # Call the OpenAI API (Using gpt-4o or your intended gpt-5 model name)
-        response = await client.chat.completions.create(
-            model="gpt-4o", # Replace with "gpt-5" when available
-            messages=[
-                {"role": "system", "content": "You are a professional, intuitive Tarot reader."},
-                {"role": "user", "content": prompt}
-            ],
-            temperature=0.7,
-            max_tokens=800
+        # 调用 Gemini (使用新版 SDK)
+        # system_instruction 用于设置模型的人格和语言规则
+        response = client.models.generate_content(
+            model="models/gemini-2.5-flash",
+            contents=prompt,
+            config={
+                "system_instruction": "You are a mystical, wise, and empathetic Tarot reader. "
+                                      "You must always respond in the same language as the user's question."
+            }
         )
         
-        return {"reading": response.choices[0].message.content}
+        return {"reading": response.text}
         
     except Exception as e:
-        print(f"Error calling OpenAI: {e}")
+        print(f"Error calling Gemini: {e}")
         raise HTTPException(status_code=500, detail="The Oracle is currently resting. Please try again later.")
 
 if __name__ == "__main__":

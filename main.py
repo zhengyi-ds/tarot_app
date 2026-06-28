@@ -47,6 +47,10 @@ async def init_game(count: int = 3):
         piles[i % count].append(card)
     return {"count": count, "piles": piles}
 
+@app.get("/api/config")
+def get_config():
+    return {"sheet_url": os.getenv("GOOGLE_SHEET_URL")}
+
 @app.post("/api/interpret")
 async def interpret_reading(request: ReadingRequest):
     try:

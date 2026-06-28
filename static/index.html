@@ -1049,11 +1049,6 @@ async function showResults() {
 
   logToGoogleSheet(state.question, state.selected);
 
-  requestAnimationFrame(() => {
-    requestAnimationFrame(() => {
-      fetchAIInterpretation(aiPayloadCards);
-    });
-  });
 }
 
 // 4. 把 AI 请求拆离出来作为一个独立的异步函数

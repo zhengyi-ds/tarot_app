@@ -17,8 +17,8 @@ with open('cards.json', 'r', encoding='utf-8') as f:
 
 @app.get("/api/init_game")
 async def init_game(count: int = 3):
-    if not (3 <= count <= 11):
-        count = random.randint(3, 11)
+    if not (1 <= count <= 11):
+        count = random.randint(1, 11)
     deck = ALL_CARDS.copy()
     random.shuffle(deck)
     piles = [[] for _ in range(count)]

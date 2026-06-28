@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -542,6 +543,77 @@ h1 {
 }
 
 .cback-inner svg { width: 44px; height: 44px; opacity: 0.3; }
+
+/* ── NEW: Text Area for Question ── */
+.question-input {
+  width: 100%;
+  max-width: 400px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--rose);
+  color: var(--text);
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.4rem;
+  text-align: center;
+  padding: 8px;
+  margin-bottom: 40px;
+  outline: none;
+  resize: none;
+  overflow: hidden;
+  transition: border-color 0.3s;
+}
+.question-input::placeholder {
+  color: var(--lotus);
+  font-style: italic;
+  font-size: 1.2rem;
+}
+.question-input:focus {
+  border-bottom-color: var(--rose-dark);
+}
+
+/* ── NEW: AI Reading Section ── */
+.ai-reading-section {
+  width: 100%;
+  max-width: 720px;
+  margin-top: 64px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: fadeUp 0.8s ease both;
+  animation-delay: 0.5s; /* Load after cards */
+}
+
+.ai-reading-text {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.15rem;
+  line-height: 1.8;
+  color: var(--text);
+  text-align: left;
+  margin-top: 32px;
+  padding: 32px;
+  background: var(--white);
+  border: 1px solid var(--line);
+  border-radius: 4px;
+  box-shadow: 0 4px 20px rgba(92,80,89,0.05);
+  white-space: pre-wrap; /* Preserve paragraph breaks */
+}
+
+.loading-oracle {
+  font-family: 'Jost', sans-serif;
+  font-size: 0.75rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--rose-dark);
+  animation: pulse 1.5s infinite;
+  margin: 40px 0;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.4; }
+  50% { opacity: 1; }
+  100% { opacity: 0.4; }
+}
 </style>
 </head>
 <audio id="bgm" src="/static/music.mp3" loop preload="auto"></audio>
@@ -551,27 +623,21 @@ h1 {
     const audio = document.getElementById('bgm');
     const btn = document.getElementById('toggle-music');
 
-    // 统一处理用户的第一次交互（点击或手机端触摸）
     function handleFirstInteraction() {
         if (audio.paused) {
             audio.play().then(() => {
                 btn.textContent = "🎵";
-            }).catch(e => console.log("播放被浏览器拦截:", e));
+            }).catch(e => console.log("Playback blocked:", e));
         }
-        // 触发一次后，彻底移除这些全局事件监听
         window.removeEventListener('click', handleFirstInteraction);
         window.removeEventListener('touchstart', handleFirstInteraction);
     }
 
-    // 监听全局交互
     window.addEventListener('click', handleFirstInteraction, { once: true });
     window.addEventListener('touchstart', handleFirstInteraction, { once: true });
 
-    // 🎵 按钮的专属开关
     btn.addEventListener('click', (e) => {
-        e.stopPropagation(); // 阻止冒泡，避免触发全局的 handleFirstInteraction
-        
-        // 如果用户第一次互动就是点按钮，手动移除全局监听
+        e.stopPropagation(); 
         window.removeEventListener('click', handleFirstInteraction);
         window.removeEventListener('touchstart', handleFirstInteraction);
 
@@ -586,7 +652,6 @@ h1 {
 </script>
 <body>
 
-<!-- ══ STEP 1 ══ -->
 <div id="step1">
   <div class="logo-line">
     <div class="logo-rule"></div>
@@ -599,7 +664,9 @@ h1 {
 
   <div class="divider"></div>
 
-  <p class="prompt-text">How many cards today?</p>
+  <textarea id="user-question" class="question-input" rows="1" placeholder="What seeks clarity today?"></textarea>
+
+  <p class="prompt-text">How many cards?</p>
 
   <div class="count-area">
     <div class="count-big" id="count-display">3</div>
@@ -618,7 +685,6 @@ h1 {
   </div>
 </div>
 
-<!-- ══ STEP 2 ══ -->
 <div id="step2" style="display:none; flex-direction:column; align-items:center; padding:56px 24px 80px; min-height:100vh;">
 
   <div class="step-header">
@@ -631,20 +697,26 @@ h1 {
   <div id="piles-container"></div>
 </div>
 
-<!-- ══ STEP 3 ══ -->
 <div id="step3" style="display:none; flex-direction:column; align-items:center; padding:56px 24px 100px; min-height:100vh;">
   <div class="step-header">
     <div class="step-eyebrow">Your reading</div>
     <h2 class="step-title">The Cards Speak</h2>
-    <p class="step-note">upright or reversed — the message is yours to interpret</p>
+    <p class="step-note" id="display-question" style="color: var(--rose-dark); margin-top: 8px;"></p>
   </div>
 
   <div id="results"></div>
 
+  <div class="ai-reading-section" id="ai-section">
+    <div class="divider" style="height: 32px; margin-bottom: 32px;"></div>
+    <div class="step-eyebrow">The Oracle's Synthesis</div>
+    <div id="ai-reading-content">
+        <div class="loading-oracle">Consulting the ether...</div>
+    </div>
+  </div>
+
   <button class="btn-restart" onclick="restart()">Read Again</button>
 </div>
 
-<!-- ══ PILE CARD PANEL (overlay) ══ -->
 <div class="pile-list-panel" id="pile-panel">
   <div class="panel-header">
     <div class="panel-eyebrow" style="font-family:'Jost',sans-serif;font-size:0.68rem;letter-spacing:0.3em;text-transform:uppercase;color:var(--text-dim);margin-bottom:6px;" id="panel-eyebrow"></div>
@@ -713,7 +785,7 @@ const ALL_CARDS = [
   {id:52,name:"Three of Swords",element:"Swords",img:"/static/cards/52.webp",up:"心碎，痛苦，悲伤",rev:"治愈，和解，放下痛苦"},
   {id:53,name:"Four of Swords",element:"Swords",img:"/static/cards/53.webp",up:"休息，恢复，冥想",rev:"过度疲劳，恢复必要，恢复中"},
   {id:54,name:"Five of Swords",element:"Swords",img:"/static/cards/54.webp",up:"冲突，失败，空虚的赢",rev:"放下争端，反思失败"},
-  {id:55,name:"Six of Swords",element:"Swords",img:"/static/cards/55.webp",up:"过40渡，改变，寻求平静",rev:"陷入困境，抗拒改变"},
+  {id:55,name:"Six of Swords",element:"Swords",img:"/static/cards/55.webp",up:"过渡，改变，寻求平静",rev:"陷入困境，抗拒改变"},
   {id:56,name:"Seven of Swords",element:"Swords",img:"/static/cards/56.webp",up:"诡计，策略，秘密",rev:"反思，暴露，重归诚实"},
   {id:57,name:"Eight of Swords",element:"Swords",img:"/static/cards/57.webp",up:"受限，困惑，自我限制",rev:"解放，突破限制，自我觉醒"},
   {id:58,name:"Nine of Swords",element:"Swords",img:"/static/cards/58.webp",up:"焦虑，绝望，梦魇",rev:"寻找帮助，克服恐惧，面对现实"},
@@ -739,7 +811,7 @@ const ALL_CARDS = [
 ];
 
 /* ── State ── */
-let state = { piles: [], selected: [], total: 0, openPileIdx: null };
+let state = { piles: [], selected: [], total: 0, openPileIdx: null, question: "" };
 
 /* ── Utils ── */
 function shuffle(arr) {
@@ -773,11 +845,16 @@ function randomize() {
 /* ── Start ── */
 function startGame() {
   const count = Math.max(1, Math.min(11, parseInt(document.getElementById('count-input').value) || 3));
+  
+  // Capture the user's question (defaulting to a general reading if empty)
+  const qInput = document.getElementById('user-question').value.trim();
+  const question = qInput ? qInput : "What do I need to know today?";
+
   const deck = shuffle(ALL_CARDS);
   const piles = Array.from({ length: count }, () => []);
   deck.forEach((card, i) => piles[i % count].push(card));
 
-  state = { piles, selected: [], total: count, openPileIdx: null };
+  state = { piles, selected: [], total: count, openPileIdx: null, question };
 
   document.getElementById('step1').style.display = 'none';
   document.getElementById('step2').style.display = 'flex';
@@ -914,16 +991,30 @@ function selectCard(pileIdx, card) {
   }
 }
 
-/* ── Show results ── */
-function showResults() {
+/* ── Show results & Fetch AI Reading ── */
+async function showResults() {
   document.getElementById('step2').style.display = 'none';
   document.getElementById('step3').style.display = 'flex';
+
+  // Show question above cards
+  document.getElementById('display-question').textContent = `"${state.question}"`;
 
   const container = document.getElementById('results');
   container.innerHTML = '';
 
+  // Prepare payload for AI
+  const aiPayloadCards = [];
+
   state.selected.forEach((card, i) => {
     const meaning = card.isReversed ? card.rev : card.up;
+    
+    // Add to payload
+    aiPayloadCards.push({
+        name: card.name,
+        isReversed: card.isReversed,
+        meaning: meaning
+    });
+
     const el = document.createElement('div');
     el.className = 'result-card';
     el.style.animationDelay = (i * 0.1) + 's';
@@ -939,12 +1030,39 @@ function showResults() {
     `;
     container.appendChild(el);
   });
+
+  // Reset AI content to loading state
+  const aiContent = document.getElementById('ai-reading-content');
+  aiContent.innerHTML = `<div class="loading-oracle">Consulting the ether...</div>`;
+
+  // Fetch AI Interpretation
+  try {
+      const response = await fetch('/api/interpret', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+              question: state.question,
+              cards: aiPayloadCards
+          })
+      });
+      
+      if (!response.ok) throw new Error("Network response was not ok");
+      
+      const data = await response.json();
+      // Inject AI response
+      aiContent.innerHTML = `<div class="ai-reading-text">${data.reading}</div>`;
+      
+  } catch (error) {
+      console.error("Failed to fetch reading:", error);
+      aiContent.innerHTML = `<div class="ai-reading-text" style="color: var(--text-dim); font-style: italic;">The veil is thick today; the oracle could not synthesize an answer. Rely on your own intuition for these cards.</div>`;
+  }
 }
 
 /* ── Restart ── */
 function restart() {
-  state = { piles: [], selected: [], total: 0, openPileIdx: null };
+  state = { piles: [], selected: [], total: 0, openPileIdx: null, question: "" };
   document.getElementById('results').innerHTML = '';
+  document.getElementById('user-question').value = '';
   document.getElementById('step3').style.display = 'none';
   document.getElementById('step1').style.display = 'flex';
   document.getElementById('count-input').value = 3;
@@ -953,3 +1071,5 @@ function restart() {
 </script>
 </body>
 </html>
+
+```
